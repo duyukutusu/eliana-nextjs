@@ -1,57 +1,41 @@
-export default function Work() {
-    const work = [
-        {
-            name: 'Frontend project',
-            icon: '/assets/work-1.png',
-            description: 'Web Design',
-            link: '',
-        },
-        {
-            name: 'Geo based app',
-            icon: '/assets/work-2.png',
-            description: 'mobile app',
-            link: '',
-        },
-        {
-            name: 'Photography site',
-            icon: '/assets/work-3.png',
-            description: 'Web Design',
-            link: '',
-        },
-        {
-            name: 'UI/UX designing',
-            icon: '/assets/work-4.png',
-            description: 'UI/UX Design',
-            link: '',
-        }
-    ];
-    return (
-        <div id="work" className="w-full px-[12%] py-10 scroll-mt-20">
-            <h4 className="text-center mb-2 text-lg font-Ovo">My portfolio</h4>
-            <h2 className="text-center text-5xl font-Ovo">My latest work</h2>
-            <p className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">Welcome to my web development portfolio! Explore a collection of projects showcasing my expertise in front-end development.</p>
+import React from 'react'
 
-            <div className="grid grid-cols-auto my-10 gap-5 dark:text-black">
-                {work.map((work) => (
-                    <div key={work.name} className="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group" style={{ backgroundImage: `url(${work.icon})` }}>
-                        <div className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                            <div>
-                                <h2 className="font-semibold">{work.name}</h2>
-                                <p className="text-sm text-gray-700">{work.description}</p>
-                            </div>
-                            <div className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                <img src="/assets/send-icon.png" alt="" className="w-5" />
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <a href="#" className="w-max flex items-center justify-center gap-2 text-gray-700 border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover rounded-full py-2 px-8 mx-auto my-20 duration-300 dark:text-white">
-                Show more
-                <img src="/assets/right-arrow-bold.png" alt="" className="w-4 dark:hidden" />
-                <img src="/assets/right-arrow-bold-dark.png" alt="" className="w-4 hidden dark:block" />
-            </a>
+const Work = () => {
+  return (
+    // 'px-6 md:px-[12%]' ile mobilde ferah boşluklar sağladık
+    <div id='work' className='w-full px-6 md:px-[12%] py-16 md:py-20 scroll-mt-20'>
+      <h4 className='text-center mb-2 text-lg font-medium text-blue-600 dark:text-sky-400'>Kliniğimiz</h4>
+      <h2 className='text-center text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-12 md:mb-16'>Deneyim Alanlarımız</h2>
 
-        </div>
-    )
+      {/* Grid yapısı: Mobilde tek sütun, tablet ve üstünde 3 sütun */}
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
+        
+        {/* Klinik Fotoğraf Alanları */}
+        {[
+          { title: 'Ergoterapi Odası', desc: 'Bireysel odaklanma ve günlük yaşam becerileri.', label: '[Terapi Odası Görseli]' },
+          { title: 'Duyu Bütünleme Parkuru', desc: 'Modern ekipmanlarla donatılmış duyusal gelişim alanı.', label: '[Duyu Bütünleme Alanı]' },
+          { title: 'Karşılama Alanı', desc: 'Ailelerimiz için konforlu ve ferah bekleme ortamı.', label: '[Bekleme / Karşılama]' }
+        ].map((item, index) => (
+          <div key={index} className='group relative aspect-[4/3] md:aspect-video rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all'>
+             <div className='w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-gray-400 dark:text-gray-600'>
+               {item.label}
+             </div>
+             <div className='absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm'>
+               <h3 className='font-bold text-gray-900 dark:text-white text-sm md:text-base'>{item.title}</h3>
+               <p className='text-xs md:text-sm text-gray-600 dark:text-gray-400'>{item.desc}</p>
+             </div>
+          </div>
+        ))}
+
+      </div>
+
+      <div className='text-center mt-12 px-2'>
+        <p className='text-sm md:text-base text-gray-600 dark:text-gray-400'>
+          Kliniğimizdeki tüm ekipmanlar, çocuklarımızın güvenliği ve gelişimi için en güncel standartlarda seçilmiştir.
+        </p>
+      </div>
+    </div>
+  )
 }
+
+export default Work

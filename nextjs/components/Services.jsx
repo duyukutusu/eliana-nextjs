@@ -1,46 +1,37 @@
-export default function Services() {
-    const services = [
-        {
-            name: 'Web design',
-            icon: '/assets/web-icon.png',
-            description: 'Web development is the process of building, programming...',
-            link: '#',
-        },
-        {
-            name: 'Mobile app',
-            icon: '/assets/mobile-icon.png',
-            description: 'Web development is the process of building, programming...',
-            link: '#',
-        },
-        {
-            name: 'UI/ UX design',
-            icon: '/assets/ui-icon.png',
-            description: 'Web development is the process of building, programming...',
-            link: '#',
-        },
-        {
-            name: 'Graphics design',
-            icon: '/assets/graphics-icon.png',
-            description: 'Web development is the process of building, programming...',
-            link: '#',
-        }
-    ];
-    return (
-        <div id="services" className="w-full px-[12%] py-10 scroll-mt-20">
-            <h4 className="text-center mb-2 text-lg font-Ovo">What i offer</h4>
-            <h2 className="text-center text-5xl font-Ovo">My services</h2>
-            <p className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">I am a frontend developer from California, USA with 10 years of experience in multiple companies like Microsoft, Tesla and Apple.</p>
+import React from 'react'
 
-            <div className="grid grid-cols-auto gap-6 my-10">
-                {services.map((service) => (
-                    <div key={service.name} className="border border-gray-300 dark:border-white/30 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 dark:hover:bg-darkHover dark:hover:shadow-white">
-                        <img src={service.icon} alt="" className="w-10" />
-                        <h3 className="text-lg my-4 text-gray-700 dark:text-white">{service.name}</h3>
-                        <p className="text-sm text-gray-600 leading-5 dark:text-white/80">{service.description}</p>
-                        <a href={service.link} className="flex items-center gap-2 text-sm mt-5">Read more <img src="/assets/right-arrow.png" alt="" className="w-4" /></a>
-                    </div>
-                ))}
+const Services = () => {
+  return (
+    // 'px-6' ile mobilde yan boşlukları sağladık, 'scroll-mt-20' ile hizalamayı koruduk
+    <div id='services' className='w-full px-6 md:px-[12%] py-16 md:py-20 scroll-mt-20'>
+      <h4 className='text-center mb-2 text-lg font-medium text-blue-600 dark:text-sky-400'>Çözümlerimiz</h4>
+      <h2 className='text-center text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-12 md:mb-16'>Hizmetlerimiz</h2>
+
+      {/* Hizmet Kartları Grid Yapısı: Mobilde 1, tablette 2, masaüstünde 3 sütun */}
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
+        
+        {[
+          { icon: '🧩', title: 'Ergoterapi', desc: 'Günlük yaşam aktivitelerine katılımı destekleyen, özgüven ve bağımsızlık kazandıran bireysel terapiler.' },
+          { icon: '🧠', title: 'Duyu Bütünleme', desc: 'Çevresel uyaranları doğru algılayıp tepki verme becerisini geliştiren, sinir sistemi regülasyonunu hedefleyen uzman yaklaşım.' },
+          { icon: '🏃', title: 'Fizyoterapi', desc: 'Motor becerilerin gelişimini hızlandıran, fiziksel koordinasyonu güçlendiren ve hareket kabiliyetini artıran egzersizler.' },
+          { icon: '📊', title: 'Gelişim Takibi', desc: 'Pediatrik değerlendirme testleri ile çocuğunuzun gelişim evrelerini dijital olarak takip ediyor, raporluyoruz.' },
+          { icon: '🤝', title: 'Aile Danışmanlığı', desc: 'Süreç boyunca aileyi rehabilite eden, ev içi uygulamalarla terapinin etkisini kalıcı kılan danışmanlık desteği.' },
+          { icon: '🧸', title: 'Oyun Terapisi', desc: 'Çocuğun kendi dilini, yani oyunu kullanarak duygusal ve sosyal becerilerini ifade etmesine alan açıyoruz.' }
+        ].map((service, index) => (
+          <div key={index} className='border border-gray-200 dark:border-gray-800 rounded-3xl p-6 md:p-8 hover:shadow-xl hover:shadow-blue-50 dark:hover:shadow-none transition-all bg-white dark:bg-gray-900'>
+            <div className='w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 dark:bg-gray-800 text-2xl mb-6'>
+              {service.icon}
             </div>
-        </div>
-    )
+            <h3 className='text-xl font-bold text-gray-900 dark:text-white mb-3'>{service.title}</h3>
+            <p className='text-gray-600 dark:text-gray-400 leading-relaxed'>
+              {service.desc}
+            </p>
+          </div>
+        ))}
+        
+      </div>
+    </div>
+  )
 }
+
+export default Services

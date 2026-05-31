@@ -1,103 +1,50 @@
 'use client'
-import { useEffect, useRef } from 'react'
 
-export default function Navbar() {
-    const sideMenuRef = useRef();
-    const navRef = useRef();
-    const navLinkRef = useRef();
+import React, { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
 
-    const openMenu = () => {
-        sideMenuRef.current.style.transform = 'translateX(-16rem)';
-    }
-    const closeMenu = () => {
-        sideMenuRef.current.style.transform = 'translateX(16rem)';
-    }
-    const toggleTheme = () => {
+const Navbar = () => {
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-        document.documentElement.classList.toggle('dark');
+  useEffect(() => setMounted(true), [])
 
-        if (document.documentElement.classList.contains('dark')) {
-            localStorage.theme = 'dark';
-        } else {
-            localStorage.theme = 'light';
-        }
-    }
+  return (
+    // 'px-6' ile mobilde kenarlardan ferah bir boşluk bıraktık
+    <nav className="w-full fixed top-0 px-6 lg:px-[12%] py-4 flex items-center justify-between z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md transition-colors border-b border-gray-100 dark:border-gray-800">
+      
+      {/* Logo Alanı */}
+      <a href="#top" className="flex items-center gap-2 cursor-pointer">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-400 shadow-md"></div>
+        <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Duyu Kutusu</span>
+      </a>
 
-    useEffect(() => {
+      {/* Orta Menü Linkleri - Mobilde gizli, tablette görünür */}
+      <ul className="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-8 py-2.5 bg-white/50 dark:bg-transparent border border-gray-100 dark:border-gray-800 shadow-sm">
+        <li><a href="#about" className="text-sm lg:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-sky-400 font-medium transition-colors">Uzmanımız</a></li>
+        <li><a href="#services" className="text-sm lg:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-sky-400 font-medium transition-colors">Hizmetlerimiz</a></li>
+        <li><a href="#veli-portal" className="text-sm lg:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-sky-400 font-medium transition-colors">Veli Portalı</a></li>
+      </ul>
 
-        window.addEventListener('scroll', () => {
-            if (scrollY > 50) {
-                navRef.current.classList.add('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
-                navLinkRef.current.classList.remove('bg-white', 'shadow-sm', 'bg-opacity-50', 'dark:border', 'dark:border-white/30', "dark:bg-transparent");
-            } else {
-                navRef.current.classList.remove('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
-                navLinkRef.current.classList.add('bg-white', 'shadow-sm', 'bg-opacity-50', 'dark:border', 'dark:border-white/30', "dark:bg-transparent");
-            }
-        })
-
-        // -------- light mode and dark mode -----------
-
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    }, [])
-
-    return (
-        <>
-            <div className="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-                <img src="/assets/header-bg-color.png" alt="" className="w-full" />
-            </div>
-
-            <nav ref={navRef} className="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50">
-
-                <a href="https://prebuiltui.com?utm_source=eliana">
-                    <img src="/assets/logo.png" alt="Logo" className="w-28 cursor-pointer mr-14 dark:hidden" />
-                    <img src="/assets/logo_dark.png" alt="Logo" className="w-28 cursor-pointer mr-14 hidden dark:block" />
-                </a>
-
-                <ul ref={navLinkRef} className="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo dark:border dark:border-white/30 dark:bg-transparent ">
-                    <li><a className='hover:text-gray-500 dark:hover:text-gray-300 transition' href="#top">Home</a></li>
-                    <li><a className='hover:text-gray-500 dark:hover:text-gray-300 transition' href="#about">About me</a></li>
-                    <li><a className='hover:text-gray-500 dark:hover:text-gray-300 transition' href="#services">Services</a></li>
-                    <li><a className='hover:text-gray-500 dark:hover:text-gray-300 transition' href="#work">My Work</a></li>
-                    <li><a className='hover:text-gray-500 dark:hover:text-gray-300 transition' href="#contact">Contact me</a></li>
-                </ul>
-
-                <div className="flex items-center gap-4">
-                    <button onClick={toggleTheme}>
-                        <img src="/assets/moon_icon.png" alt="" className="w-5 dark:hidden" />
-                        <img src="/assets/sun_icon.png" alt="" className="w-5 hidden dark:block" />
-                    </button>
-
-                    <a href="#contact" className="hidden lg:flex items-center gap-3 px-8 py-1.5 border border-gray-300 hover:bg-slate-100/70 dark:hover:bg-darkHover rounded-full ml-4 font-Ovo dark:border-white/30">
-                        Contact
-                        <img src="/assets/arrow-icon.png" alt="" className="w-3 dark:hidden" />
-                        <img src="/assets/arrow-icon-dark.png" alt="" className="w-3 hidden dark:block" />
-                    </a>
-
-                    <button className="block md:hidden ml-3" onClick={openMenu}>
-                        <img src="/assets/menu-black.png" alt="" className="w-6 dark:hidden" />
-                        <img src="/assets/menu-white.png" alt="" className="w-6 hidden dark:block" />
-                    </button>
-
-                </div>
-                {/* -- ----- mobile menu ------  -- */}
-                <ul ref={sideMenuRef} className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
-
-                    <div className="absolute right-6 top-6" onClick={closeMenu}>
-                        <img src="/assets/close-black.png" alt="" className="w-5 cursor-pointer dark:hidden" />
-                        <img src="/assets/close-white.png" alt="" className="w-5 cursor-pointer hidden dark:block" />
-                    </div>
-
-                    <li><a href="#top" onClick={closeMenu}>Home</a></li>
-                    <li><a href="#about" onClick={closeMenu}>About me</a></li>
-                    <li><a href="#services" onClick={closeMenu}>Services</a></li>
-                    <li><a href="#work" onClick={closeMenu}>My Work</a></li>
-                    <li><a href="#contact" onClick={closeMenu}>Contact me</a></li>
-                </ul>
-            </nav>
-        </>
-    )
+      {/* Sağ Taraf - Tema Butonu ve İletişim */}
+      <div className="flex items-center gap-2 sm:gap-4">
+        {mounted && (
+          <button 
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="p-2 sm:p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-xl sm:text-2xl flex items-center justify-center"
+            aria-label="Temayı Değiştir"
+          >
+            {theme === 'dark' ? "☀️" : "🌙"}
+          </button>
+        )}
+        
+        <a href="https://wa.me/905555555555" className="hidden sm:flex items-center gap-2 px-5 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm lg:text-base text-gray-900 dark:text-white font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm">
+          Bize Ulaşın
+        </a>
+      </div>
+      
+    </nav>
+  )
 }
+
+export default Navbar
